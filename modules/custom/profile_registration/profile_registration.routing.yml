@@ -1,0 +1,15 @@
+json_cron:
+  path: '/json_cron'
+  defaults:
+    _title: 'JSON Cron'
+    _controller: '\Drupal\profile_registration\Controller\ProfileRegistrationController::json_cron'
+  requirements:
+    _permission: 'access content'
+
+testpush:
+  path: '/testpush'
+  defaults:
+    _title: 'Test Push'
+    _controller: '\Drupal\profile_registration\Controller\ProfileRegistrationController::testpush'
+  requirements:
+    _permission: 'access content'

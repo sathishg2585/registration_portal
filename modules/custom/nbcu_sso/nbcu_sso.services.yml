@@ -1,0 +1,5 @@
+services:
+  nbcu_sso:
+    class: '\Drupal\nbcu_sso\EventSubscriber\SSORequestSubscriber'
+    tags:
+      - { name: 'event_subscriber' }

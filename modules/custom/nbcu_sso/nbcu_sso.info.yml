@@ -1,0 +1,9 @@
+name: NBCU SSO Custom
+type: module
+description: This will additional User attritubes to User Profile after SSO authentication
+package: NBCU
+core: 8.x
+dependencies:
+  - samlauth
+version: 8-x.0.2
+package: NBCU

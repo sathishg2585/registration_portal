@@ -1,0 +1,45 @@
+<?php
+/**
+ * @file
+ * Contains nbcu_sso.module.
+ */
+use Drupal\user\RoleInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\user\UserInterface;
+use Drupal\ultimate_cron\Entity\CronJob;
+
+/**
+ * Implements hook_user_presave().
+ */
+function nbcu_sso_user_presave(UserInterface $account) {
+  // Hook into the user creation process from ExternalAuth::register() so that
+  // we don't need to save the new user a second time to add our SAML attribute
+  // values into the new user object. The way externalauth prefixes account
+  // names acts as a recursion stop, in case any called code (e.g. event) saves
+  // the account.
+  //file_put_contents("/tmp/test1", print_r($account,true) . " " . print_r($name,true) . "\n", FILE_APPEND);
+  /*if ($account->isNew() && strpos($account->getAccountName(), 'samlauth_') === 0) {
+	// Doublecheck that we're actually processing an ACS request, which we can
+    // do by checking the request for presence of a user name attribute.
+    $saml_service = \Drupal::service('samlauth.saml');
+    if ($saml_service->getAttributeByConfig('user_name_attribute')) {
+      $saml_service->synchronizeUserAttributes($account, TRUE);
+    }
+  }*/
+}
+
+function nbcu_sso_cron() {
+  // Delete all expired records since the last cron run.
+  $cron_config = \Drupal::config('nbcu_sso.settings');
+  $interval = $cron_config->get('cron_run_interval');
+  $midnight_timestamp = mktime(0, 0, 0);
+  if ($interval > 0) {
+    $cron_next = \Drupal::state()->get('nbcu_sso.last_run', 0) + $interval;
+    if ((int) REQUEST_TIME >= $cron_next && (REQUEST_TIME >= $midnight_timestamp && REQUEST_TIME <= $midnight_timestamp + 7200)) {
+      \Drupal::database()->delete('sessions')
+        ->condition('timestamp', REQUEST_TIME - 3600, '<')
+        ->execute();
+      \Drupal::state()->set('nbcu_sso.last_run', REQUEST_TIME);
+    }
+  }
+}

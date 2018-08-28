@@ -1,0 +1,8 @@
+services:
+  entity_legal.subscriber:
+    class: Drupal\entity_legal\EventSubscriber\EntityLegalSubscriber
+    tags:
+      - { name: event_subscriber }
+  plugin.manager.entity_legal:
+    class: Drupal\entity_legal\EntityLegalPluginManager
+    parent: default_plugin_manager

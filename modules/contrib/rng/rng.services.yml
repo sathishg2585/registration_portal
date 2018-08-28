@@ -1,0 +1,80 @@
+services:
+  rng.configuration:
+    class: Drupal\rng\RngConfiguration
+    arguments: ['@config.factory', '@plugin.manager.identity_channel']
+  rng.event_manager:
+    class: Drupal\rng\EventManager
+    arguments: ['@entity.manager']
+    parent: container.trait
+  rng.cron:
+    class: Drupal\rng\RngCron
+    arguments: ['@queue', '@entity_type.manager']
+  rng.entity.access:
+    class: Drupal\rng\RngEntityAccess
+    arguments: ['@rng.event_manager']
+  rng.entity.model:
+    class: Drupal\rng\RngEntityModel
+    arguments: ['@entity_type.manager', '@rng.event_manager', '@plugin.manager.identity_channel']
+  rng.registrant.factory:
+    class: Drupal\rng\RegistrantFactory
+    arguments: ['@entity_type.manager', '@rng.event_manager']
+  rng.breadcrumb.registrant:
+    class: Drupal\rng\Breadcrumb\RegistrantBreadcrumbBuilder
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }
+  rng.breadcrumb.registration:
+    class: Drupal\rng\Breadcrumb\RegistrationBreadcrumbBuilder
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }
+  rng.breadcrumb.registration_group:
+    class: Drupal\rng\Breadcrumb\GroupBreadcrumbBuilder
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }
+  rng.breadcrumb.rule_component:
+    class: Drupal\rng\Breadcrumb\RuleComponentBreadcrumbBuilder
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }
+  rng.route_subscriber:
+    class: Drupal\rng\Routing\RouteSubscriber
+    arguments: ['@entity.manager', '@rng.event_manager']
+    tags:
+      - { name: event_subscriber }
+  rng.request_subscriber:
+    class: Drupal\rng\EventSubscriber\RngRequestSubscriber
+    arguments: ['@entity_type.manager', '@rng.entity.model', '@rng.event_manager']
+    tags:
+      - { name: event_subscriber }
+  rng.route_enhancer:
+    class: Drupal\rng\Routing\Enhancer\RngRouteEnhancer
+    tags:
+      - { name: route_enhancer }
+  access_check.rng.entity_is_event:
+    class: Drupal\rng\Access\EntityIsEventCheck
+    arguments: ['@rng.event_manager']
+    tags:
+      - { name: access_check, applies_to: _entity_is_event }
+  access_check.rng.event_rule_reset:
+    class: Drupal\rng\Access\EventRuleResetCheck
+    arguments: ['@rng.event_manager']
+    tags:
+      - { name: access_check, applies_to: _event_rule_reset }
+  access_check.rng.event_registrations_allowed:
+    class: Drupal\rng\Access\RegistrationAddAccessCheck
+    arguments: ['@entity.manager']
+    tags:
+      - { name: access_check, applies_to: _registration_add_access }
+  rng.paramconverter.entity_type_rule_component:
+    class: Drupal\rng\ParamConverter\ComponentTypeConverter
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: paramconverter }
+  rng.event_route_context:
+    class: Drupal\rng\ContextProvider\RngEventRouteContext
+    arguments: ['@current_route_match', '@rng.event_manager']
+    tags:
+      - { name: 'context_provider' }
+  cache_context.rng_event:
+    class: Drupal\rng\Cache\Context\RngEventCacheContext
+    arguments: ['@rng.event_route_context']
+    tags:
+      - { name: cache.context }

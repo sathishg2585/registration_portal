@@ -1,0 +1,14 @@
+id: entity_legal_document_acceptance
+label: Legal document acceptances
+migration_tags:
+  - Drupal 7
+source:
+  plugin: entity_legal_document_acceptance
+process:
+  aid: aid
+  document_version_name: document_version_name
+  uid: uid
+  acceptance_date: acceptance_date
+  data: data
+destination:
+  plugin: entity:entity_legal_document_acceptance

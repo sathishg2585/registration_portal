@@ -1,0 +1,5 @@
+administer entity legal:
+  title: 'Administer legal documents'
+
+permission_callbacks:
+  - \Drupal\entity_legal\EntityLegalPermissions::permissions

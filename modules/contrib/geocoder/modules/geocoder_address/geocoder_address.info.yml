@@ -1,0 +1,13 @@
+type: module
+name: Geocoder Address
+description: 'Provides Geocoder integration with Address module.'
+# core: 8.x
+dependencies:
+  - address
+  - geocoder_field
+
+# Information added by Drupal.org packaging script on 2018-03-18
+version: '8.x-2.0-beta3'
+core: '8.x'
+project: 'geocoder'
+datestamp: 1521381790

@@ -1,0 +1,44 @@
+name: Sports Events Theme
+type: theme
+description: 'Sports Events Theme'
+package: core
+# core: 8.x
+
+#Libraries
+libraries:
+  - sports_events/bootstrap
+  - sports_events/global-components
+
+#Regions
+regions:
+  header: 'Header'
+  primary_menu: 'Primary Menu'
+  slideshow: 'Slideshow'
+  homepagemessage: 'Home page message'
+  topwidget_first: 'Top First Widget'
+  topwidget_second: 'Top Second Widget'
+  topwidget_third: 'Top Third Widget' 
+  highlighted: 'Highlighted' 
+  page_title: 'Page Title'
+  breadcrumb: 'Breadcrumb'
+  search: 'Search'
+  content: 'Content'
+  sidebar_first: 'Left Sidebar'
+  sidebar_second: 'Right Sidebar'  
+  bottom_first: 'Bottom First Widget'
+  bottom_second: 'Bottom Second Widget'
+  bottom_third: 'Bottom Third Widget'
+  bottom_forth: 'Bottom Forth Widget'
+  footer_first: 'Footer First Widget'
+  footer_second: 'Footer Second Widget'
+  footer_third: 'Footer Third Widget'
+  footer_menu: 'Footer Menu'
+  google_map: 'Google Map'
+  auto_hidden_block: 'Auto hidden blocks'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+# Information added by Drupal.org packaging script on 2017-11-28
+version: '8.x-1.1'
+core: '8.x'
+project: 'sports_events'
+datestamp: 1511882586

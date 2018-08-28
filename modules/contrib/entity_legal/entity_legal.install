@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the entity_legal module.
+ */
+
+/**
+ * Change document version primary key to 'name'.
+ */
+function entity_legal_update_8100() {
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_manager = \Drupal::entityTypeManager();
+
+  // Build map of document versions from acceptances.
+  $map = [];
+  $document_acceptances = $entity_manager->getStorage(ENTITY_LEGAL_DOCUMENT_ACCEPTANCE_ENTITY_NAME)
+    ->loadMultiple();
+  /** @var \Drupal\entity_legal\EntityLegalDocumentAcceptanceInterface $document_acceptance */
+  foreach ($document_acceptances as $id => $document_acceptance) {
+    $map['acceptances'][$id] = $document_acceptance->get('document_version_name')->entity->id();
+  }
+
+  // Re-install 'entity_legal_document_version' entity schema.
+  $document_versions = $entity_manager->getStorage(ENTITY_LEGAL_DOCUMENT_VERSION_ENTITY_NAME)
+    ->loadMultiple();
+  $update_manager->uninstallEntityType($update_manager->getEntityType(ENTITY_LEGAL_DOCUMENT_VERSION_ENTITY_NAME));
+  $update_manager->installEntityType($entity_manager->getDefinition(ENTITY_LEGAL_DOCUMENT_VERSION_ENTITY_NAME));
+  /** @var \Drupal\entity_legal\EntityLegalDocumentVersionInterface $document_version */
+  foreach ($document_versions as $id => $document_version) {
+    $map['versions'][$id] = $document_version->bundle() . '_' . $document_version->getCreatedTime();
+    $entity_manager->getStorage(ENTITY_LEGAL_DOCUMENT_VERSION_ENTITY_NAME)
+      ->create([
+        'name'                       => $map['versions'][$id],
+        'document_name'              => $document_version->bundle(),
+        'label'                      => $document_version->label(),
+        'acceptance_label'           => $document_version->get('acceptance_label'),
+        'created'                    => $document_version->get('created'),
+        'changed'                    => $document_version->get('changed'),
+        'entity_legal_document_text' => $document_version->get('entity_legal_document_text'),
+      ])->save();
+  }
+
+  // Re-install 'entity_legal_document_acceptance' entity schema.
+  $update_manager->uninstallEntityType($update_manager->getEntityType(ENTITY_LEGAL_DOCUMENT_ACCEPTANCE_ENTITY_NAME));
+  $update_manager->installEntityType($entity_manager->getDefinition(ENTITY_LEGAL_DOCUMENT_ACCEPTANCE_ENTITY_NAME));
+  foreach ($document_acceptances as $id => $document_acceptance) {
+    $entity_manager->getStorage(ENTITY_LEGAL_DOCUMENT_ACCEPTANCE_ENTITY_NAME)
+      ->create([
+        'aid'                   => $document_acceptance->id(),
+        'document_version_name' => $map['versions'][$map['acceptances'][$id]],
+        'uid'                   => $document_acceptance->get('uid'),
+        'acceptance_date'       => $document_acceptance->get('acceptance_date'),
+        'data'                  => isset($document_acceptance->getFields()['data']) ? $document_acceptance->get('data') : '',
+      ])->save();
+  }
+
+  $documents = $entity_manager->getStorage(ENTITY_LEGAL_DOCUMENT_ENTITY_NAME)
+    ->loadMultiple();
+  /** @var \Drupal\entity_legal\EntityLegalDocumentInterface $document */
+  foreach ($documents as $document) {
+    $document->set('published_version', $map['versions'][$document->get('published_version')]);
+    $document->save();
+  }
+}

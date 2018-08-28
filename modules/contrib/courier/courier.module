@@ -1,0 +1,83 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\courier\Entity\TemplateCollection;
+use Drupal\courier\ChannelInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+
+/**
+ * Implements hook_entity_insert().
+ *
+ * @see _courier_entity_postsave()
+ */
+function courier_entity_insert(EntityInterface $entity) {
+  _courier_entity_postsave($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ *
+ * @see _courier_entity_postsave()
+ */
+function courier_entity_update(EntityInterface $entity) {
+  _courier_entity_postsave($entity);
+}
+
+/**
+ * Respond to saving entities after they have been written to storage.
+ */
+function _courier_entity_postsave(EntityInterface $entity) {
+  if ($entity instanceof ChannelInterface) {
+    /** @var \Drupal\courier\Service\GlobalTemplateCollectionManagerInterface $template_collection_manager */
+    $template_collection_manager = \Drupal::service('courier.manager.global_template_collection');
+    $template_collection_manager->notifyTemplateChanged($entity);
+  }
+}
+
+/**
+ * Implements hook_entity_load().
+ */
+function courier_entity_load($entities, $entity_type) {
+  if (!reset($entities) instanceof ChannelInterface) {
+    return;
+  }
+
+  /** @var \Drupal\courier\Service\GlobalTemplateCollectionManagerInterface $template_collection_manager */
+  $template_collection_manager = \Drupal::service('courier.manager.global_template_collection');
+  foreach ($entities as $entity) {
+    $template_collection_manager
+      ->importFromGlobalCollection($entity);
+  }
+}
+
+/**
+ * Implements hook_entity_predelete().
+ */
+function courier_entity_predelete(EntityInterface $entity) {
+  // Remove references from TemplateCollection when a Channel entity is deleted.
+  if ($entity instanceof ChannelInterface) {
+    if ($collection = TemplateCollection::getTemplateCollectionForTemplate($entity)) {
+      $collection
+        ->removeTemplate($entity->getEntityTypeId())
+        ->save();
+    }
+  }
+
+  // Postgres has strict type checks.
+  // See https://github.com/dpi/rng/issues/50
+  if (!$entity instanceof ContentEntityInterface) {
+    return;
+  }
+
+  // Remove template collections if owner entity is deleted.
+  $template_collection_storage = \Drupal::entityManager()
+    ->getStorage('courier_template_collection');
+  $query = $template_collection_storage->getQuery();
+  $group = $query->andConditionGroup()
+    ->condition('owner__target_type', $entity->getEntityTypeId(), '=')
+    ->condition('owner__target_id', $entity->id(), '=');
+  $query->condition($group);
+  if ($ids = $query->execute()) {
+    $template_collection_storage->delete($template_collection_storage->loadMultiple($ids));
+  }
+}

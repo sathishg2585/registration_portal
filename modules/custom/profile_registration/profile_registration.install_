@@ -1,0 +1,31 @@
+<?php
+
+function profile_registration_schema() {
+  $schema['registration'] = array(
+    'fields' => array(
+      'id'=>array(
+        'description' => 'The primary identifier for json.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name'=>array(
+        'description' => 'Name',
+        'type' => 'varchar',
+        'length' => 200,
+      ),
+      'date'=>array(
+        'description' => 'Date',
+        'type' => 'varchar',
+        'mysql_type' => 'datetime',
+      ),
+      'json_data'=>array(
+        'description' => 'JSON',
+        'type' => 'varchar',
+        'mysql_type' => 'json',
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}

@@ -1,0 +1,12 @@
+services:
+  logger.channel.samlauth:
+    parent: logger.channel_base
+    arguments: ['samlauth']
+  samlauth.saml:
+    class: Drupal\samlauth\SamlService
+    arguments: [ '@externalauth.externalauth', '@config.factory', '@entity_type.manager', '@logger.channel.samlauth', '@event_dispatcher' ]
+  samlauth.event_subscriber.user_sync:
+    class: Drupal\samlauth\EventSubscriber\UserSyncEventSubscriber
+    arguments: ['@config.factory', '@entity_type.manager', '@typed_data_manager', '@email.validator', '@logger.channel.samlauth']
+    tags:
+      - {name: event_subscriber}

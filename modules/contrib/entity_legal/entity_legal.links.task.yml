@@ -1,0 +1,4 @@
+entity.entity_legal_document.edit_form:
+  title: 'Edit'
+  route_name: entity.entity_legal_document.edit_form
+  base_route: entity.entity_legal_document.edit_form

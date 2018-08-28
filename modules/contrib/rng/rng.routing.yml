@@ -1,0 +1,223 @@
+# registration entities
+# Registration add: rng.event.{entity_type_of_event}.register
+# See \Drupal\rng\Routing\RouteSubscriber for more info.
+entity.registration.canonical:
+  path: '/registration/{registration}'
+  defaults:
+    _entity_view: 'registration'
+    _title: 'Registration'
+  requirements:
+    _entity_access: 'registration.view'
+
+entity.registration.edit_form:
+  path: '/registration/{registration}/edit'
+  defaults:
+    _entity_form: 'registration.edit'
+    _title: 'Edit registration'
+  requirements:
+    _entity_access: 'registration.update'
+
+entity.registration.delete_form:
+  path: '/registration/{registration}/delete'
+  defaults:
+    _entity_form: 'registration.delete'
+    _title: 'Delete registration'
+  requirements:
+    _entity_access: 'registration.delete'
+
+entity.registration.registrants:
+  path: '/registration/{registration}/registrants'
+  defaults:
+    _entity_form: 'registration.registrants'
+    _title: 'Edit identities'
+  requirements:
+    _entity_access: 'registration.update'
+
+# registration_type entities
+entity.registration_type.add:
+  path: '/admin/structure/rng/registration_types/add'
+  defaults:
+    _entity_form: 'registration_type.add'
+    _title: 'Add registration type'
+  requirements:
+    _permission: 'administer registration types'
+
+entity.registration_type.edit_form:
+  path: '/admin/structure/rng/registration_types/manage/{registration_type}'
+  defaults:
+    _entity_form: 'registration_type.edit'
+    _title: 'Edit registration type'
+  requirements:
+    _permission: 'administer registration types'
+
+entity.registration_type.delete_form:
+  path: '/admin/structure/rng/registration_types/manage/{registration_type}/delete'
+  defaults:
+    _entity_form: 'registration_type.delete'
+    _title: 'Delete registration type'
+  requirements:
+    _permission: 'administer registration types'
+
+rng.registration_type.overview:
+  path: '/admin/structure/rng/registration_types'
+  defaults:
+    _controller: '\Drupal\Core\Entity\Controller\EntityListController::listing'
+    entity_type: 'registration_type'
+    _title: 'Registration types'
+  requirements:
+    _permission: 'administer registration types'
+
+# registration group entities
+entity.registration_group.canonical:
+  path: '/rng/group/{registration_group}/edit'
+  defaults:
+    _entity_form: 'registration_group.edit'
+    _title: 'Edit registration group'
+  requirements:
+    _entity_access: 'registration_group.update'
+
+entity.registration_group.edit_form:
+  path: '/rng/group/{registration_group}/edit'
+  defaults:
+    _entity_form: 'registration_group.edit'
+    _title: 'Edit registration group'
+  requirements:
+    _entity_access: 'registration_group.update'
+
+entity.registration_group.delete_form:
+  path: '/rng/group/{registration_group}/delete'
+  defaults:
+    _entity_form: 'registration_group.delete'
+    _title: 'Delete registration group'
+  requirements:
+    _entity_access: 'registration_group.delete'
+
+# rule entities
+entity.rng_rule.delete_form:
+  path: '/rng/rule/{rng_rule}/delete'
+  defaults:
+    _entity_form: 'rng_rule.delete'
+    _title: 'Delete rule'
+  requirements:
+    _entity_access: 'rng_rule.delete'
+
+# rule component entities
+entity.rng_rule_component.canonical:
+  path: '/rng/component/{rng_rule_component}/edit'
+  defaults:
+    _entity_form: 'rng_rule_component.edit'
+    _title: 'Edit component'
+  requirements:
+    _entity_access: 'rng_rule_component.update'
+
+entity.rng_rule_component.edit_form:
+  path: '/rng/component/{rng_rule_component}/edit'
+  defaults:
+    _entity_form: 'rng_rule_component.edit'
+    _title: 'Edit component'
+  requirements:
+    _entity_access: 'rng_rule_component.update'
+
+# event_type entities
+entity.event_type.add:
+  path: '/admin/structure/rng/event_types/add'
+  defaults:
+    _entity_form: 'event_type.add'
+    _title: 'Add event type'
+  requirements:
+    _permission: 'administer event types'
+
+entity.event_type.edit_form:
+  path: '/admin/structure/rng/event_types/manage/{event_type}/edit'
+  defaults:
+    _entity_form: 'event_type.edit'
+    _title: 'Edit event type'
+  requirements:
+    _permission: 'administer event types'
+
+entity.event_type.delete_form:
+  path: '/admin/structure/rng/event_types/manage/{event_type}/delete'
+  defaults:
+    _entity_form: 'event_type.delete'
+    _title: 'Delete event type'
+  requirements:
+    _permission: 'administer event types'
+
+entity.event_type.access_defaults:
+  path: '/admin/structure/rng/event_types/manage/{event_type}/access_defaults'
+  defaults:
+    _entity_form: 'event_type.event_access_defaults'
+    _title: 'Event type access defaults'
+  requirements:
+    _permission: 'administer event types'
+
+entity.event_type.field_mapping:
+  path: '/admin/structure/rng/event_types/manage/{event_type}/field_mapping'
+  defaults:
+    _entity_form: 'event_type.field_mapping'
+    _title: 'Field mapping'
+  requirements:
+    _permission: 'administer event types'
+
+entity.event_type.access_defaults.delete_all:
+  path: '/admin/structure/rng/event_types/manage/{event_type}/access_defaults/delete'
+  defaults:
+    _form: '\Drupal\rng\Form\EventTypeRuleDeleteAll'
+    _title: 'Delete all event custom rules'
+  requirements:
+    _permission: 'administer event types'
+  options:
+    parameters:
+      rng_event_type_rule:
+        type: 'entity:rng_event_type_rule'
+
+rng.event_type.overview:
+  path: '/admin/structure/rng/event_types'
+  defaults:
+    _controller: '\Drupal\Core\Entity\Controller\EntityListController::listing'
+    entity_type: 'event_type'
+    _title: 'Event types'
+  requirements:
+    _permission: 'administer event types'
+
+# Event type rules
+rng.rng_event_type_rule.component.edit:
+  path: '/admin/structure/rng/event_type_rule/{rng_event_type_rule}/{component_type}/{component_id}/edit'
+  defaults:
+    _form: '\Drupal\rng\Form\EventTypeRuleComponentEdit'
+    _title: 'Component edit'
+  requirements:
+    _permission: 'administer event types'
+  options:
+    parameters:
+      rng_event_type_rule:
+        type: 'entity:rng_event_type_rule'
+      component_type:
+        type: 'rng_component_type'
+      component_id:
+        type: 'rng_component_id'
+
+# RNG Configuration
+rng.config:
+  path: '/admin/config/rng'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'RNG'
+  requirements:
+    _permission: 'access administration pages'
+
+rng.config.settings:
+  path: '/admin/config/rng/settings'
+  defaults:
+    _form: '\Drupal\rng\Form\RngSettingsForm'
+    _title: 'RNG settings'
+  requirements:
+    _permission: 'administer rng'
+
+rng.config.plugin.condition:
+  path: '/admin/config/rng/plugin/condition'
+  defaults:
+    _form: '\Drupal\rng\Form\PluginConditionSettingsForm'
+    _title: 'Condition settings'
+  requirements:
+    _permission: 'administer rng'

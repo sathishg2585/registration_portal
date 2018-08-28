@@ -1,0 +1,13 @@
+---
+instances: 1
+memory: 512m
+applications:
+  - name: registration-portal
+    host: registration-portal
+    path: ./
+    buildpack: https://github.com/cloudfoundry/php-buildpack#v4.3.51
+    services:
+      - registration-portal-mysql
+    env:
+      http_proxy: http://proxy.inbcu.com:80
+      https_proxy: http://proxy.inbcu.com:80

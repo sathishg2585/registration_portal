@@ -1,0 +1,5 @@
+global-components:
+  Version: 1.x
+  css:
+    theme:
+      css/nbcu.css: {}

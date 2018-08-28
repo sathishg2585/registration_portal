@@ -1,0 +1,15 @@
+id: entity_legal_document
+label: Legal documents
+migration_tags:
+  - Drupal 7
+source:
+  plugin: entity_legal_document
+process:
+  id: name
+  label: label
+  published_version: published_version
+  require_signup: require_signup
+  require_existing: require_existing
+  settings: settings
+destination:
+  plugin: entity:entity_legal_document

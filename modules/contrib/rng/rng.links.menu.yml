@@ -1,0 +1,35 @@
+rng.registration_type.overview:
+  title: 'Registration types'
+  parent: system.admin_structure
+  description: 'Manage registration types.'
+  route_name: rng.registration_type.overview
+
+entity.registrant_type.collection:
+  title: 'Registrant types'
+  parent: system.admin_structure
+  description: 'Manage registrant types.'
+  route_name: entity.registrant_type.collection
+
+rng.config:
+  title: 'RNG'
+  parent: system.admin_config
+  description: 'Manage registration types.'
+  route_name: rng.config
+
+rng.event.overview:
+  title: 'Event types'
+  parent: system.admin_structure
+  description: 'Manage which entity bundles are designated as events.'
+  route_name: rng.event_type.overview
+
+rng.config.settings:
+  title: 'Registrant settings'
+  parent: rng.config
+  description: 'Manage registrant settings.'
+  route_name: rng.config.settings
+
+rng.config.plugin.condition:
+  title: 'Condition settings'
+  parent: rng.config
+  description: 'Manage global settings for conditions defined by RNG.'
+  route_name: rng.config.plugin.condition

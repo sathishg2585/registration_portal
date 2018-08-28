@@ -1,0 +1,7 @@
+name: Profile Registration
+description: Profile Registration with Webform
+core: 8.x
+package: Custom
+type: module
+dependencies:
+  - webform

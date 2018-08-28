@@ -1,0 +1,63 @@
+entity.entity_legal_document.collection:
+  path: '/admin/structure/legal'
+  defaults:
+    _entity_list: 'entity_legal_document'
+    _title: 'Legal documents'
+  requirements:
+    _permission: 'administer entity legal'
+
+entity.entity_legal_document.add_form:
+  path: '/admin/structure/legal/add'
+  defaults:
+    _entity_form: 'entity_legal_document.add'
+    _title: 'Add legal document'
+  requirements:
+    _permission: 'administer entity legal'
+
+entity.entity_legal_document.edit_form:
+  path: '/admin/structure/legal/manage/{entity_legal_document}'
+  defaults:
+    _entity_form: 'entity_legal_document.edit'
+    _title_callback: 'Drupal\entity_legal\Controller\EntityLegalController::documentEditPageTitle'
+  requirements:
+    _entity_access: 'entity_legal_document.update'
+
+entity.entity_legal_document.delete_form:
+  path: '/admin/structure/legal/manage/{entity_legal_document}/delete'
+  defaults:
+    _entity_form: 'entity_legal_document.delete'
+    _title: 'Delete'
+  requirements:
+    _entity_access: 'entity_legal_document.delete'
+
+entity.entity_legal_document.canonical:
+  path: '/legal/document/{entity_legal_document}'
+  defaults:
+    _controller: '\Drupal\entity_legal\Controller\EntityLegalController::documentPage'
+    _title_callback: 'Drupal\entity_legal\Controller\EntityLegalController::documentPageTitle'
+  requirements:
+    _entity_access: 'entity_legal_document.view'
+
+entity.entity_legal_document_version.add_form:
+  path: '/admin/structure/legal/manage/{entity_legal_document}/add'
+  defaults:
+    _controller: '\Drupal\entity_legal\Controller\EntityLegalController::documentVersionForm'
+    _title_callback: 'Drupal\entity_legal\Controller\EntityLegalController::documentVersionAddFormTitle'
+  requirements:
+    _permission: 'administer entity legal'
+
+entity.entity_legal_document_version.edit_form:
+  path: '/admin/structure/legal/manage/{entity_legal_document}/manage/{entity_legal_document_version}'
+  defaults:
+    _entity_form: 'entity_legal_document_version.default'
+    _title_callback: 'Drupal\entity_legal\Controller\EntityLegalController::documentVersionEditFormTitle'
+  requirements:
+    _entity_access: 'entity_legal_document_version.update'
+
+entity.entity_legal_document_version.canonical:
+  path: '/legal/document/{entity_legal_document}/{entity_legal_document_version}'
+  defaults:
+    _controller: '\Drupal\entity_legal\Controller\EntityLegalController::documentPage'
+    _title_callback: 'Drupal\entity_legal\Controller\EntityLegalController::documentPageTitle'
+  requirements:
+    _entity_access: 'entity_legal_document.view'

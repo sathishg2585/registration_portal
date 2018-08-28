@@ -1,0 +1,7 @@
+popup:
+  version: VERSION
+  js:
+    js/entity_legal.popup.js: {}
+  dependencies:
+    - core/drupal.dialog
+    - core/drupalSettings

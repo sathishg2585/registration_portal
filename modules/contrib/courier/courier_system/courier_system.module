@@ -1,0 +1,61 @@
+<?php
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\courier\TemplateCollectionInterface;
+use Drupal\user\Entity\User;
+use Drupal\courier\Entity\GlobalTemplateCollection;
+
+/**
+ * Implements hook_entity_access().
+ */
+function courier_system_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  if ($operation == 'templates' && $entity instanceof TemplateCollectionInterface) {
+    // Determine if template collection belongs to courier_system.
+
+    /** @var \Drupal\courier\Service\GlobalTemplateCollectionManagerInterface $template_collection_manager */
+    $template_collection_manager = \Drupal::service('courier.manager.global_template_collection');
+    $gtc = $template_collection_manager
+      ->getGlobalCollectionForLocalCollection($entity);
+
+    if ($gtc && (strpos($gtc->id(), 'courier_system.') === 0)) {
+      return AccessResult::allowedIfHasPermission($account, 'administer account settings');
+    }
+  }
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_mail_alter().
+ */
+function courier_system_mail_alter(&$message) {
+  $mail_id = $message['id'];
+  $settings = \Drupal::config('courier_system.settings');
+  $override = $settings->get('override');
+
+  if (!empty($override[$mail_id])) {
+    // Cancel sending.
+    $message['send'] = FALSE;
+
+    $gtc = GlobalTemplateCollection::load('courier_system.' . $mail_id);
+    if ($gtc) {
+      $template_collection = $gtc->getTemplateCollection();
+      // _user_mail_notify() adds account param.
+      // Only valid for user.module mails.
+      /** @var \Drupal\Core\Session\AccountInterface $account */
+      $account = $message['params']['account'];
+      /** @var User $identity */
+      $identity = User::load($account->id());
+      $template_collection
+        ->setTokenValue('user', $identity)
+        // Required to add [user:one-time-login-url], [user:cancel-url] tokens:
+        // @see user_mail_tokens().
+        ->setTokenOption('callback', 'user_mail_tokens');
+
+      /** @var \Drupal\courier\Service\CourierManagerInterface $courier_manager */
+      $courier_manager = \Drupal::service('courier.manager');
+      $courier_manager->sendMessage($template_collection, $identity);
+    }
+  }
+}

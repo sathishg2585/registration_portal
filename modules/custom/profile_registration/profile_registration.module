@@ -1,0 +1,108 @@
+<?php
+/*
+ * @file
+ * code for profile_registration module
+*/
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function profile_registration_preprocess_page(&$variables) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $current_route = \Drupal::service('current_route_match')->getRouteName();
+  if($current_path == '/webform/registration') {
+    $variables['#attached']['library'][] = 'profile_registration/global-webform';
+  } 
+}
+
+function profile_registration_cron() {
+  $lastCronRun = (empty(\Drupal::config('profile_registration.settings')->get('profile_registration_job'))
+                  ?0:\Drupal::config('profile_registration.settings')->get('profile_registration_job'));
+  $currentDate = strtotime('now');$lastCronRun = 0;
+  $nextDay = strtotime('now +1 day', $lastCronRun);
+  if ($currentDate > $nextDay) {
+    //
+    $flag = $registeration_flag = 0;
+    $database = \Drupal::service('database');
+    $select = $database->select('webform_submission_data', 'wsd');
+    $select->fields('wsd', array('sid', 'name', 'value'));	
+    $select->fields('ws', array('token', 'changed'));
+    $select->addJoin('LEFT','webform_submission','ws','wsd.sid=ws.sid');
+    $select->condition('wsd.webform_id', 'registration', '=');    
+    $select->condition('wsd.name', array('first_name', 'last_name', 'sso', 'passport','ssn', 'document_verified', 'json_flag'), 'IN');
+    $executed = $select->execute();
+	
+    // Get all the results.
+    $results = $executed->fetchAll(\PDO::FETCH_ASSOC);	
+    $records = array();
+    if (count($results) > 0) {
+      foreach($results as $result){
+        $records[$result['sid']][$result['name']] = $result['value'];
+        $records[$result['sid']]['token'] = $result['token'];
+        $records[$result['sid']]['updated'] = $result['changed'];
+      }
+    }
+    $data = array();
+    $sids = array();
+    if (count($records) > 0){
+      foreach($records as $sid => $record){
+        $json_data_string = '';
+        if (empty($record['json_flag']) || $record['json_flag'] == 0 ){  
+          if (!empty($record['first_name']) && (!empty($record['passport']) || !empty($record['ssn']))) {
+            $data[$record['sso']] = array(
+              'first_name' => $record['first_name'],		  
+              'last_name' => $record['last_name'],
+              'sso' => $record['sso'],
+              'passport' => $record['passport'],
+              'ssn' => $record['ssn'],
+              'document_verified' => $record['document_verified'],
+              'updated' => $record['updated'],
+            );
+            $sids[] = $sid;
+            $flag++;
+          }
+        }
+      }
+      if ($flag > 0) {
+        $json_data_string = json_encode($data);
+        $previous_day = date('Ymd');
+        $database = \Drupal::service('database');
+        $select = $database->select('registration', 'reg');
+        $select->fields('reg', array('name'));
+        $select->condition('reg.date', $previous_day, '=');
+        $registration = $select->execute();
+        $registration_results = $registration->fetchAll(\PDO::FETCH_ASSOC);
+        if (isset($registration_results) && !empty($registration_results)){
+          echo "UPDATE";
+          $registeration_flag++;
+        }
+        else {
+          echo "INSERT";
+          $database = \Drupal::service('database');
+          $insert = $database->insert('registration')
+            ->fields([
+              'name' => 'Registration',
+              'date' => date('Y-m-d H:i:s'),
+              'json_data' => $json_data_string,
+            ]);
+          $insert->execute();
+          $registeration_flag++;
+        }
+      }
+      if ($registeration_flag > 0 && count($sids) > 0){
+        $database = \Drupal::service('database');
+        $update = $database->update('webform_submission_data');	
+        $update->fields(['value' => 1,]);	
+        $update->condition('webform_id', 'registration', '=');
+        $update->condition('sid', $sids, 'IN');
+        $update->condition('name', 'json_flag', '=');
+        $update->execute();
+      }
+    }
+    //
+    if ($registeration_flag > 0) {
+      \Drupal::configFactory()->getEditable('profile_registration.settings')->set('profile_registration_job', strtotime('now'))->save();
+    }
+  }
+}

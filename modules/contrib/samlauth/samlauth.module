@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @file
+ * Contains samlauth.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_help().
+ */
+function samlauth_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the samlauth module.
+    case 'help.page.samlauth':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Allows users to authenticate against an external SAML identity provider.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function samlauth_form_user_login_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#validate'][] = 'samlauth_check_saml_user';
+}
+
+/**
+ * Validation callback for SAML users logging in through the normal methods.
+ */
+function samlauth_check_saml_user($form, FormStateInterface $form_state) {
+  if (!\Drupal::config('samlauth.authentication')->get('drupal_saml_login')) {
+    if ($form_state->hasAnyErrors()) {
+      // If previous validation has already failed (name/pw incorrect or blocked),
+      // bail out so we don't disclose any details about a user that otherwise
+      // wouldn't be authenticated.
+      return;
+    }
+
+    if ($account = user_load_by_name($form_state->getValue('name'))) {
+      $user_data = \Drupal::service('user.data');
+      $saml_id = $user_data->get('samlauth', $account->id(), 'saml_id');
+      if (!is_null($saml_id)) {
+        $form_state->setErrorByName('name', t('SAML users must sign in with SSO'));
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_user_presave().
+ */
+function samlauth_user_presave(UserInterface $account) {
+  // Hook into the user creation process from ExternalAuth::register() so that
+  // we don't need to save the new user a second time to add our SAML attribute
+  // values into the new user object. The way externalauth prefixes account
+  // names acts as a recursion stop, in case any called code (e.g. event) saves
+  // the account.
+  if ($account->isNew() && strpos($account->getAccountName(), 'samlauth_') === 0) {
+    // Doublecheck that we're actually processing an ACS request, which we can
+    // do by checking the request for presence of a user name attribute.
+    /** @var \Drupal\samlauth\SamlService $saml_service */
+    $saml_service = \Drupal::service('samlauth.saml');
+    if ($saml_service->getAttributeByConfig('user_name_attribute')) {
+      $saml_service->synchronizeUserAttributes($account, TRUE);
+    }
+  }
+}

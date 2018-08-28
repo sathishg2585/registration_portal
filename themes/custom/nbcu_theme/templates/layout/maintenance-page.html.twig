@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Theme override to display a single Drupal page while offline.
+ *
+ * All available variables are mirrored in page.html.twig.
+ * Some may be blank but they are provided for consistency.
+ *
+ * @see template_preprocess_maintenance_page()
+ */
+#}
+<!--- Start content -->
+<div class="error_layer">
+  <div class="error_frame">
+  
+  <main role="main" class="maintenance-msg">
+    <header role="banner">
+      {% if logo %}
+        <div class="brand logo">
+          <a href="{{ front_page }}" title="{{ 'Home'|t }}" rel="home">
+            <img src="/themes/custom/nbcu_theme/images/nbcsports-logo.svg" alt="SGPhones Directory">
+          </a>
+        </div>
+      {% endif %}
+    </header>
+    <p>{{ page.content }}</p>
+  </main>
+  </div>
+</div>
+<!---End content -->

@@ -1,0 +1,5 @@
+entity.entity_legal_document.collection:
+  title: 'Legal documents'
+  parent: system.admin_structure
+  description: 'Manage Legal documents.'
+  route_name: entity.entity_legal_document.collection

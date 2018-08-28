@@ -1,0 +1,4 @@
+skip_queue: false
+channel_preferences:
+  user:
+    - courier_email

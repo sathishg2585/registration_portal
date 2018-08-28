@@ -1,0 +1,21 @@
+name: NBCU Theme
+type: theme
+description: 'Custom theme with minimalist design.'
+# core: 8.x
+base theme: false
+libraries-override:
+  # Replace an entire library.
+  system/base: nbcu_theme/global-components
+  # Replace a core module JavaScript asset.
+  core/drupal.active-link:
+    js:
+      misc/active-link.js: false
+regions:
+  highlighted: Highlighted
+  content: Content
+  footer: Footer
+# Information added by Drupal.org packaging script on 2017-10-11
+version: '8.x-1.0'
+core: '8.x'
+project: 'nbcu_theme'
+datestamp: 1480507087

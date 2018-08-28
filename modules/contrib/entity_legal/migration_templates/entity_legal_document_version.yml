@@ -1,0 +1,16 @@
+id: entity_legal_document_version
+label: Legal document versions
+migration_tags:
+  - Drupal 7
+source:
+  plugin: entity_legal_document_version
+process:
+  name: name
+  document_name: document_name
+  label: label
+  entity_legal_document_text: entity_legal_document_text
+  acceptance_label: acceptance_label
+  created: created
+  changed: updated
+destination:
+  plugin: entity_legal_document_version

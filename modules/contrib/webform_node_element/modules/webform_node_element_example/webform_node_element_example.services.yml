@@ -1,0 +1,5 @@
+services:
+  webform_node_element_example.example_event_subscriber:
+    class: Drupal\webform_node_element_example\EventSubscriber\ExampleEventSubscriber
+    tags:
+      - { name: 'event_subscriber' }

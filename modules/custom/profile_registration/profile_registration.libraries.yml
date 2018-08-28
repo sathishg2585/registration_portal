@@ -1,0 +1,19 @@
+global-webform:
+  Version: 1.x
+  header: true
+  js:
+    js/main.js: {}    
+  dependencies:
+    - core/drupal
+    - core/drupal.states
+    - core/jquery
+    - core/jquery.once
+    - core/jquery.ui.progressbar
+    - core/jquery.ui.slider
+    - webform/webform.form
+    - webform/webform.states
+    - webform/webform.element.details.save
+    - webform/webform.element.details.toggle
+    - webform/webform.element.toggle
+    - webform/webform.element.radios
+    - webform/webform.form.submit_once

@@ -1,0 +1,7 @@
+nbcu_sso.admin:
+  path: '/admin/config/people/nbcu-sso'
+  defaults:
+    _title: 'NBCU SSO Cron Settings'
+    _form: '\Drupal\nbcu_sso\Form\NbcuSsoSettingsForm'
+  requirements:
+    _permission: 'administer nbcu sso authentication'

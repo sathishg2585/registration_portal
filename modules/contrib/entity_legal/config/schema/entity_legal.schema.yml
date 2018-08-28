@@ -1,0 +1,45 @@
+# Schema for the configuration files of the Entity Legal module.
+
+entity_legal.document.*:
+  type: config_entity
+  label: 'Legal document'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    published_version:
+      type: string
+      label: 'Published version'
+    require_signup:
+      type: boolean
+      label: 'Require signup'
+    require_existing:
+      type: boolean
+      label: 'Require existing'
+    settings:
+      type: mapping
+      label: 'Settings'
+      mapping:
+        new_users:
+          type: mapping
+          label: 'New users'
+          mapping:
+            require:
+              type: boolean
+              label: 'Require'
+            require_method:
+              type: string
+              label: 'Require method'
+        existing_users:
+          type: mapping
+          label: 'Existing users'
+          mapping:
+            require:
+              type: boolean
+              label: 'Require'
+            require_method:
+              type: string
+              label: 'Require method'

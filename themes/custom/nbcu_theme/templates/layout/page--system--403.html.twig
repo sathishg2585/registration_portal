@@ -1,0 +1,90 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a single page.
+ *
+ * The doctype, html, head and body tags are not in this template. Instead they
+ * can be found in the html.html.twig template in this directory.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ * Site identity:
+ * - front_page: The URL of the front page. Use this instead of base_path when
+ *   linking to the front page. This includes the language domain or prefix.
+ * - logo: The url of the logo image, as defined in theme settings.
+ * - site_name: The name of the site. This is empty when displaying the site
+ *   name has been disabled in the theme settings.
+ * - site_slogan: The slogan of the site. This is empty when displaying the site
+ *   slogan has been disabled in theme settings.
+ *
+ * Page content (in order of occurrence in the default page.html.twig):
+ * - messages: Status and error messages. Should be displayed prominently.
+ * - node: Fully loaded node, if there is an automatically-loaded node
+ *   associated with the page and the node ID is the second argument in the
+ *   page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * Regions:
+ * - page.header: Items for the header region.
+ * - page.navigation: Items for the Navigation region.
+ * - page.page_title: Used by Current page Title.
+ * - page.banner: Items for the banner region.
+ * - page.highlighted: Items for the highlighted top  region.
+ * - page.content_top: The main content top of the current page.
+ * - page.help: Item for the help region.
+ * - page.breadcrumb: Item for the Breadcrumb region.
+ * - page.content: The main content of the current page.
+ * - page.sidebar_first: Items for the first sidebar.
+ * - page.content_bottom: Items for the bottom in content region.
+ * - page.footer: Items for the footer top region.
+ *
+ * @see template_preprocess_page()
+ * @see html.html.twig
+ *
+ * @ingroup themeable
+ */
+#}
+<!-- header start -->
+<div class="main-header-class">
+<header>
+  <div class="header_site_footer_content clear_after" id="header">	
+    {% if page.header %}
+      {{ page.header }}
+    {% endif %}	
+  </div>
+</header>
+
+<main class="header_site_footer_content">
+  <div class="main_content_container">
+    <!-- Page Title -->
+	<div class="main_content_container_header headline_padding_top_bottom">	
+	  {%  if page.page_title and not is_front %}
+	    <div class="white_font">{{ page.page_title|raw }}</div>
+      {% endif %}	      
+	</div>			
+    <!-- End Page Title ---- >	
+    <!--- Start content -->
+      <div class="content_layout">
+        <div class={{contentlayout}}>
+            Your account does not currently allow access to view this content.Please contact Administrator.
+        </div>
+      </div>
+    <!---End content -->	
+  </div>
+</main>
+<!-- footer start -->		
+<footer>
+  <div class="header_site_footer_content">
+	<p>Copyright 2017 | All rights reserved</p>
+  </div> 
+</footer>
+<!-- footer end -->	
+</div>

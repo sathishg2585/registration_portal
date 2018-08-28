@@ -1,0 +1,5 @@
+#profile_registration.services.yml
+services:
+  profile_registration.tibcosqlapi:
+    class: Drupal\profile_registration\Service\TibcoSQLApi
+    arguments: ['@config.factory']

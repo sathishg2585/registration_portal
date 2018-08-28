@@ -1,0 +1,960 @@
+@import url(https://fonts.googleapis.com/css?family=Rajdhani:400,500,600,700,300);
+
+/* --------------------------------------------- 
+* Filename:     custom-style.css
+* Version:      1.0.0 (2016-02-27)
+* Website:      http://www.zymphonies.com
+* Description:  Global Styles
+* Author:       Zymphonies Team
+                info@zymphonies.com
+-----------------------------------------------*/
+
+body{
+  /*font-family: 'Rajdhani', sans-serif;*/
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 14px;
+  line-height: 160%;
+  color: #333;
+  overflow-x: hidden;
+  font-weight: 500;
+  background-color: #F7F7F7;
+}
+
+p{ margin: 0 0 20px 0; }
+
+h1, .h1{ font-size: 22px; color: #FFF; }
+
+h2, .h2{ font-size: 20px; color: #000; }
+
+h3, .h3{ font-size: 16px; color: #000; }
+
+h4, .h4{ font-size: 14px; color: #000; }
+
+img{ max-width: 100%; }
+
+a{
+  color: #EE0328;
+}
+
+a:hover{
+  color: #CD1B01;
+  text-decoration: none;
+}
+
+ul.links.inline{
+  padding: 0;
+}
+
+ol, ul {
+  padding-left: 20px;
+}
+
+ul.links.inline li{
+  list-style: none;
+}
+
+.block{
+  margin-bottom: 20px;
+}
+
+.main-header {
+  background-size: cover;
+  position: relative;
+  height: 60px;
+  background: #181A20;
+}
+
+.main-header nav{
+  background: #1A2833;
+  border: 0;
+  margin: 0;
+  position: relative;
+  z-index: 9;
+  height: 60px;
+  border-radius: 0;
+  margin-bottom: 15px;
+}
+
+.main-header .region{
+  position: relative;
+  z-index: 2;
+}
+
+.main-header .block{
+  margin: 0;
+}
+
+/*Region Header*/
+
+.site-branding{
+  margin: 0;
+}
+
+.brand.logo{
+  margin-right: 5px;
+}
+
+.logo_image {
+  background: url(../images/nbc-sports-header-logo.png) no-repeat;
+  height: 35px;
+  width: 226px;
+  margin: 9px 0px;
+}
+
+.region-header .brand{
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 100%;
+  padding: 3px 0;
+}
+
+.site-name a{
+  font-size: 24px;
+  color: #fff;
+}
+
+.region-header .site-branding__slogan{
+  font-size: 10px;
+  color: #fff;
+}
+
+/*Banner*/
+
+.slideshow{
+  text-align: center;
+  line-height: 160%;
+}
+
+.slideshow h2{
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/*Top Widget*/
+
+.topwidget .fa{
+  font-size: 60px;
+  background: #4D4F4A;
+  width: 120px;
+  height: 120px;
+  padding: 32px;
+  border-radius: 50%;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.topwidget .block h2.title{
+  background: #1BA4C4;
+  color: #fff;
+  padding: 10px;
+  margin: 0;
+}
+
+.topwidget .block .content{
+  border: 1px solid #1BA4C4;
+  padding: 10px 10px 0 10px;
+}
+
+/*Region Homepage Message*/
+
+.region-homepagemessage{
+  border: 1px solid #E9E8ED;
+  padding: 15px;
+  font-size: 16px;
+  text-align: center;
+  margin: 20px 0;
+  background: #FDFDFD;
+}
+
+.region-homepagemessage h2{
+  margin: 5px 0;
+}
+
+.region-homepagemessage p,
+.region-homepagemessage .block{
+  margin: 0;
+}
+
+/*Footer Widget*/
+
+.footerwidget{
+  padding: 20px 0;
+}
+
+.footerwidget .left{
+  float: left;
+  margin: 10px 10px 0 0;
+}
+
+.copyright{
+  background: #1A2833;
+  font-size: 12px;
+  color: #fff;
+  display: none;
+}
+.sports-events-body .copyright .container {
+  width: 70%;
+  padding-top: 15px;
+}
+
+.copyright p.copyright_msg{
+  margin: 13px 0;
+  color: #666;
+  display: none;
+}
+
+.footerwidget ul{
+  padding-left: 15px;
+}
+
+.footerwidget .block,
+.bottom-widgets .block{
+  background: #FBFBFB;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.footerwidget .block h2.title,
+.bottom-widgets .block h2.title{
+  margin: 5px 0 10px 0;
+}
+
+/*Bottom Widgets*/
+
+.bottom-widgets{
+  padding: 20px 0;
+}
+
+.bottom-widgets img {
+  max-width: 100%;
+  border: 5px solid #fff;
+  box-shadow: 0px 0px 2px #ddd;
+}
+
+.bottom-widgets .block{
+  background: #FBFBFB;
+}
+
+/*Footer Menu*/
+
+.footer-menu{
+  margin: 0;
+  border: 0;
+  color: #fff;
+}
+
+.footer-menu ul{
+  margin: 10px 0;
+  padding: 0;
+}
+
+.footer-menu nav li{
+  display: inline-block;
+}
+
+.footer-menu nav li a{
+  color: #8D8D8D;
+  border-right: 1px solid;
+  padding-right: 12px;
+  margin-right: 12px;
+  margin-bottom: 6px;
+  border-color: #666;
+  display: inline-block;
+  float: left;
+  vertical-align: middle;
+  position: relative;
+}
+.footer-menu nav li a:hover {
+  color: #FFFFFF;
+}
+.google_map p,
+.google_map .block{
+  margin: 0;
+}
+
+.google_map iframe{
+  display: block;
+}
+
+/*Credit Link*/
+
+.credit-link{
+  text-align: left;
+  display: none;
+}
+
+/*Social Media*/
+
+.social-media{
+  margin: 10px 0;
+  overflow: hidden;
+  float: left;
+}
+
+.social-media a {
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  float: left;
+  margin: 0 10px 0 0;
+  text-align: center;
+  background: #3262b9;
+  font-size: 14px;
+  line-height: 220%;
+}
+
+.social-media a.google-plus{
+  background: #de2020;
+}
+
+.social-media a.twitter{
+  background: #29C5F6;
+}
+
+.social-media a.linkedin{
+  background: #069;
+}
+
+.social-media a.pinterest{
+  background: #C61118;
+}
+
+.social-media a.rss{
+  background: #FF6D00;
+}
+
+.social-media a:hover{
+  opacity: .6;
+}
+
+/*Form*/
+
+input, button, select, textarea{
+  padding: 8px;
+  border: 1px solid #C7C7C7;
+}
+
+.contact-message-form label{
+  display: block;
+}
+
+.btn, 
+input[type="submit"]{
+  background: #ff8a24;
+  color: #fff;
+  border: 0;
+  padding: 13px;
+  line-height: 100%;
+  height: 39px;
+  border-radius: 2px;
+}
+
+.btn:hover, 
+input[type="submit"]:hover{
+  background: #CD1B01;
+}
+
+/*Front Page*/
+
+.path-frontpage .feed-icon{
+  display: none;
+}
+
+/*Menu*/
+
+.sports-events-body .navbar-toggle {
+  float: left;
+  padding-right: 12px !important;
+}
+.sports-events-body .navbar-toggle .sr-only{
+  position: unset !important;
+}
+.navbar-default .navbar-toggle{
+  margin-right: 0;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  background: none;
+  padding: 6px 6px;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #fff;
+}
+
+.navbar-toggle .icon-close {
+  display: none;
+  background: url(../images/menu_close.png) no-repeat;
+  width: 35px;
+  height: 26px;
+  background-size: 80%;
+  background-position: 4px;
+}
+.navbar-toggle .icon-bar {
+  display: block;
+  width: 35px;
+  height: 4px;
+  border-radius: 1px;
+}
+
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:hover{
+  background: none;
+}
+
+nav h2{
+  display: none;
+}
+
+.menu-base-theme,
+.menu-base-theme a, 
+.menu-base-theme a:hover, 
+.menu-base-theme a:focus, 
+.menu-base-theme a:active, 
+.menu-base-theme a.highlighted{
+  background: none;
+}
+
+.menu-base-theme a:hover, 
+.menu-base-theme a:focus, 
+.menu-base-theme a:active, 
+.menu-base-theme a.highlighted{
+  color: #fff;
+}
+
+.menu-base-theme li a{
+  background: #FBFBFB
+}
+
+.region-primary-menu{
+  display: none;
+  background: #fff;
+  border-radius: 3px;
+  width: 100%;
+}
+
+.menu-base-theme a{
+  border-bottom: 1px solid #EEF0F7;
+}
+
+.menu-base-theme a span.sub-arrow{
+  color: #999;
+  font-size: 22px;
+  padding: 5px;
+  border-radius: 2px;
+  border: 1px solid #DCDCDC;
+  background: #EFEFEF;
+} 
+
+.navbar-toggle{
+  z-index: 999;
+}
+
+.sports-events-body .menu-base-theme {
+  padding: 5px 0px;
+}
+.sports-events-body .menu-base-theme li.active a {
+  background-color: #181A20 !important;
+  color: #FDB913;
+}
+.sports-events-body .region-primary-menu, 
+.sports-events-body .menu-base-theme li a {
+  color: #FDB913;
+}
+/*Breadcrumb*/
+
+.breadcrumb{
+  background: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #eee;
+  font-size: 11px;
+}
+
+.breadcrumb ul{
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb ul li{
+  display: inline-block;
+}
+
+/*Search Form*/
+
+.search-block-form{
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.region-search{
+  background: #E6E5EA;
+  padding: 15px;
+}
+
+#search-block-form{
+  display: table;
+  width: 100%;
+}
+
+#search-block-form .form-item,
+#search-block-form .form-actions{
+  display: table-cell;
+  vertical-align: top;
+}
+
+#search-block-form input{
+  width: 100%;
+}
+
+/*Demo Typography*/
+
+.bd-example {
+  position: relative;
+  padding: 20px;
+  border: 2px solid #f7f7f9;
+}
+
+.highlight{
+  padding: 20px;
+  background-color: #f7f7f9;
+}
+
+.highlight pre{
+  border: 0;
+  background: none;
+}
+
+.bd-example-type .table tr:first-child td {
+  border-top: 0;
+}
+
+.bd-example-type h1, 
+.bd-example-type h2, 
+.bd-example-type h3, 
+.bd-example-type h4, 
+.bd-example-type h5, 
+.bd-example-type h6 {
+  margin: 0;
+}
+
+.bd-example-type .table td {
+  padding: 15px 0;
+  border-color: #eee;
+}
+
+/*Contact Form*/
+
+.contact-message-feedback-form .form-text,
+.contact-message-feedback-form .form-email,
+.contact-message-feedback-form .form-textarea{
+  width: 100%;
+}
+
+/*User Login Form*/
+
+.user-login-form,
+.user-form,
+.user-pass{
+  max-width: 500px;
+  margin: 40px auto;
+  border: 1px solid #ddd;
+  padding: 10px 30px;
+  background: #fff;
+}
+
+.user-login-form .form-text,
+.user-login-form .form-email,
+.user-form .form-text,
+.user-form .form-email,
+.user-pass .form-text{
+  width: 100%;
+}
+
+.form-composite > .fieldset-wrapper > .description, 
+.form-item .description {
+  font-size: 11px;
+  color: #999;
+  font-style: italic;
+}
+
+/*Maintainance*/
+
+.maintenance-page{
+  background: url(../images/maintenance-bg.png) #66CBFF center no-repeat;
+  color: #fff;
+  text-align: center;
+  padding-top: 220px;
+  padding-bottom: 100px;
+  font-size: 18px;
+  color: #000;
+}
+
+.maintenance-msg {
+  margin: 20px 0;
+  background: rgba(242, 244, 207, 0.88);
+  padding: 20px 30px;
+  display: inline-block;
+  color: #404040;
+  border: 1px solid #fff;
+  box-shadow: 5px 5px 0px #FFFFFF;
+  font-size: 14px;
+}
+
+.maintenance-msg h1{
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.maintenance-page .brand,
+.maintenance-page .name-and-slogan{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.maintenance-page .site-name a{
+  color: #404040;
+}
+
+.maintenance-page .site-slogan,
+.maintenance-page .name-and-slogan{
+  display: none;
+}
+
+/*Comment*/
+
+.comment-wrap{
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #F5F5F5;
+}
+
+.comment-wrap .author-details{
+  float: left;
+  width: 20%;
+}
+
+.comment-wrap .author-comments{
+  padding-left: 5px;
+  float: left;
+  width: 80%;
+}
+
+.comment-submitted{
+  padding: 5px 10px;
+  border: 1px solid #eee;
+  font-size: 12px;
+  display: inline-block;
+  line-height: 100%;
+}
+
+.comment-wrap .author-comments h3{
+  margin-top: 10px;
+}
+
+.comment-wrap .author-comments p{
+  margin-bottom: 10px;
+}
+
+/*links Inline*/
+
+ul.links.inline li{
+  display: inline-block;
+  padding-right: 10px;
+}
+
+/*Carousel*/
+
+.carousel-caption p,
+.carousel-caption h3{
+  display: none;
+}
+
+.carousel-caption h3{
+  margin-top: 0;
+}
+
+.carousel-indicators li{
+  border: 1px solid #348BC2;
+}
+
+.carousel-indicators .active{
+  background-color: #348BC2;
+}
+
+/*Sidebar Block*/
+
+.sidebar .region h2.title{
+  background: #ADADAD;
+  padding: 10px 15px;
+  color: #fff;
+  margin: 0;
+}
+
+.sidebar .region .content{
+  border: 1px solid #eee;
+  padding: 10px;
+}
+
+/*Profile Page*/
+
+.path-user .profile >div{
+  display: inline-block;
+}
+
+.path-user .profile .label{
+  display: block;
+  color: #333;
+}
+
+/**/
+
+.path-user .content_layout {
+  margin-top: 50px;
+}
+.path-user .content_layout .user_operation_icon,
+.path-user .content_layout .user_operation_title,
+.path-user .content_layout .user_form form {
+  padding: 10px 30px;
+}
+.path-user .content_layout .user_operation_title .block,
+.path-user .content_layout .user_operation_title h1 {
+  margin: 0px
+}
+.path-user .content_layout .user_operation_wrapper {
+  margin: 0px auto;
+  max-width: 560px;
+  background-color: #21262D;
+  border-radius: 10px;
+  padding: 15px;
+  height: 300px;
+}
+.path-user .content_layout.user_register .user_operation_wrapper {
+  max-width: 630px;
+  height: 660px;
+}
+.path-user .content_layout .user_operation_wrapper .user_operation_icon_wrapper,
+.path-user .content_layout .user_operation_wrapper .region.region-content {
+  float: left;
+  width: 50%;
+  height: 270px;
+}
+.path-user .content_layout .user_operation_tabs {
+  margin: 0px auto;
+  max-width: 0px;
+  padding: 15px;
+  max-width: 560px;
+}
+.path-user .content_layout .user_form form {
+  margin: 0px auto;
+  background-color: #21262D;
+  border: 0px;
+}
+.path-user .content_layout .user_operation_icon {
+  margin-top: 20%;
+}
+.path-user .content_layout.user_register .user_operation_icon {
+  margin-top: 50%;
+}
+.path-user .content_layout .user_operation_icon .logo {
+  background: url(../images/nbc-sports-logo.png) no-repeat;
+  height: 100px;
+  width: 50%;
+  background-position: 50% 0%;
+  margin: 0 auto;
+}
+.path-user .content_layout .user_operation_title {
+  text-align: center;
+}
+.path-user .content_layout .user_operation_title h1 {
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.path-user .content_layout .user_form form .description {
+  display: none;
+}
+.path-user .content_layout .user_form form label {
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  margin-bottom: 11px;
+}
+.path-user .content_layout .user_form form .form-text, 
+.path-user .content_layout .user_form form .form-email, 
+.path-user .content_layout .user_form form .form-tel, 
+.path-user .content_layout .user_form form .form-select, 
+.path-user .content_layout .user_form form .form-date, 
+.path-user .content_layout .user_form form .form-time {
+  color: #FFF;
+  line-height: 1.2;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  background: transparent;
+  height: 30px;
+  padding: 0 10px;
+}
+.path-user .content_layout .user_form form .form-item{
+  margin-bottom: 20px;
+}
+.path-user .content_layout .user_form form .form-actions{
+  margin-top: 30px;
+}
+.path-user .content_layout .user_form form .button.form-submit,
+.path-user .content_layout .user_operation_tabs .tabs.primary li a {
+  border: none;
+  padding: 5px 10px !important;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  height: 35px;
+}
+.path-user .content_layout .user_form form .button.form-submit{
+  background-color: #FCB714;
+  color: #000;
+}
+.path-user .content_layout .user_operation_tabs .tabs.primary li a {
+  background-color: #21262D;
+  color: #FFF;
+}
+.path-user .copyright {
+  display: none;
+}
+.path-user .content_layout .user_operation_tabs .tabs {
+  text-align: center;
+}
+.path-user .content_layout .user-pass p {
+  color: #FFF;
+}
+@media (max-width: 500px) {
+  .path-user .content_layout .user_operation_wrapper .user_operation_icon_wrapper .user_operation_icon {
+    display: none;
+  }
+  .path-user .content_layout .user_operation_wrapper .user_operation_icon_wrapper, 
+  .path-user .content_layout .user_operation_wrapper .region.region-content {
+    width: 100%;
+    float: unset;
+    height: unset;
+  }
+  .path-user .content_layout .user_operation_wrapper {
+    height: 335px;
+  }
+  .path-user .content_layout.user_register .user_operation_wrapper {
+    height: 700px;
+  }
+  .path-user .content_layout .user_operation_tabs .tabs {
+    text-align: left;
+  }
+  .path-user .content_layout .user_operation_tabs .tabs > li {
+    margin-top: 5px;
+  }
+  .path-user .content_layout .user_form form{
+    padding: 5px 30px !important;
+  }
+}
+
+.events-view-table table {
+  border: 1px solid #999;
+  margin: 10px;
+  width: 100%;
+}
+.events-view-table table th {
+  padding: 5px;
+  background-color: #CCC;
+}
+.events-view-table table td {
+  padding: 5px;
+  background-color: #FFF;
+}
+.events-view-table .views-exposed-form,
+.events-view-table .views-exposed-form div.js-form-item,
+.events-view-table .views-exposed-form div.form-actions {
+  float: left;
+  padding: 5px;
+}
+.events-view-table .views-exposed-form {
+  width: 100%;
+}
+.content_layout .views-element-container table {
+  width: 100%;
+}
+.content_layout .views-element-container table th {
+  background-color: #CCC;
+}
+.content_layout .views-element-container table th,
+.content_layout .views-element-container table td {
+  border: 1px solid #999;
+  padding: 5px;
+}
+/**/
+.progress-step:not(:last-child)::after {
+  height: 0px;
+}
+#edit-about-me, #edit-accreditation {
+  padding: 20px;
+  background-color: #FFFFFF;
+  border: 2px solid #E6E9EB;
+}
+.page-head {
+  margin-top: 0px;
+}
+.page-head {
+  font-size: 22px;
+  font-weight: normal !important;
+}
+.fieldset-box {
+  border: 1px solid #E6E9EB;
+  border-radius: 2px;
+}
+.fieldset-box legend {
+  background-color: #E6E9EB;
+  font-size: 14px;
+  font-weight: bold;  
+  height: 35px;
+}
+.fieldset-box legend span {
+  display: inline-block;
+  margin-left: 5px;
+  margin-top: 10px;
+  color: #5E5E5E;
+}
+.fieldset-box .fieldset-wrapper {
+  padding: 15px;
+}
+.fieldset-box .fieldset-wrapper .webform-flexbox{
+  margin: 0px;
+}
+.path-webform input[type=text] {
+  padding: 5px;
+  width: 200px;
+  border-radius: 2px;
+}
+.path-webform select{
+  padding: 7px;
+  width: 200px;
+  border-radius: 2px;
+}
+.registration-form details {
+  display: none;
+}
+.name_title {
+
+}
+.name_title select {
+
+}
+#edit-gender--wrapper legend{
+  background-color: #FFFFFF;
+  height: 22px;
+  border: 0px;
+}
+.block-page-title-block h1 {
+  text-transform: uppercase;
+}

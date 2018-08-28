@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains webform_node_element.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function webform_node_element_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the webform_node_element module.
+    case 'help.page.webform_node_element':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Displays a node as a webform element.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Entity Legal module.
+ *
+ * @longdesc
+ * Provides versioned legal forms to serve to users. By default only a message
+ * method is supplied for user prompting.
+ */
+
+define('ENTITY_LEGAL_DOCUMENT_ENTITY_NAME', 'entity_legal_document');
+define('ENTITY_LEGAL_DOCUMENT_VERSION_ENTITY_NAME', 'entity_legal_document_version');
+define('ENTITY_LEGAL_DOCUMENT_ACCEPTANCE_ENTITY_NAME', 'entity_legal_document_acceptance');
+
+use Drupal\Core\Link;
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function entity_legal_page_attachments_alter(array &$attachments) {
+  $context = ['attachments' => &$attachments];
+
+  // Execute Popup method plugin.
+  \Drupal::service('plugin.manager.entity_legal')
+    ->createInstance('popup')
+    ->execute($context);
+}
+
+/**
+ * Implements template_preprocess_page().
+ */
+function entity_legal_preprocess_page(&$variable) {
+  // Execute Message method plugin.
+  \Drupal::service('plugin.manager.entity_legal')
+    ->createInstance('message')
+    ->execute();
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function entity_legal_form_user_register_form_alter(&$form, &$form_state) {
+  $context = ['form' => &$form];
+
+  // Execute Profile Form method plugin.
+  \Drupal::service('plugin.manager.entity_legal')
+    ->createInstance('form_link')
+    ->execute($context);
+
+  // Execute Profile Form Embedded method plugin.
+  \Drupal::service('plugin.manager.entity_legal')
+    ->createInstance('form_inline')
+    ->execute($context);
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function entity_legal_entity_extra_field_info() {
+  $extra = [];
+
+  $documents = \Drupal::entityTypeManager()
+    ->getStorage(ENTITY_LEGAL_DOCUMENT_ENTITY_NAME)
+    ->loadByProperties(['require_signup' => 1]);
+  /** @var \Drupal\entity_legal\EntityLegalDocumentInterface $document */
+  foreach ($documents as $document) {
+    if ($document->getPublishedVersion()) {
+      $extra['user']['user']['form']['legal_' . $document->id()] = [
+        'label'       => $document->getPublishedVersion()->label(),
+        'description' => t('Checkbox for accepting :link', [
+          ':link' => Link::createFromRoute($document->label(), 'entity.entity_legal_document.edit_form'),
+        ]),
+        'weight'      => -4,
+      ];
+    }
+  }
+
+  return $extra;
+}

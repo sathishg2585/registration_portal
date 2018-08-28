@@ -1,0 +1,6 @@
+# Most of this module's configuration must be filled from scratch by the user,
+# but we will enable some security settings by default, since it is possible but
+# not recommended for the module to operate without them.
+security_authn_requests_sign: true
+security_messages_sign: true
+strict: true

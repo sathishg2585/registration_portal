@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Implements hook_requirements().
+ */
+function courier_requirements($phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    $count = \Drupal::entityManager()
+      ->getStorage('courier_message_queue_item')
+      ->getQuery()
+      ->count()
+      ->execute();
+
+    $requirements['courier'] = [
+      'title' => t('Courier'),
+      'severity' => REQUIREMENT_INFO,
+      'value' => \Drupal::translation()->formatPlural(
+        $count,
+        '@count item in queue.',
+        '@count items in queue.'
+      ),
+    ];
+  }
+
+  return $requirements;
+}
+
+/**
+ * Install global template collection entity.
+ */
+function courier_update_8001() {
+  $entity_manager = \Drupal::entityTypeManager();
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $entity_manager->getDefinition('template_collection_global');
+  $update_manager->installEntityType($entity_type);
+}

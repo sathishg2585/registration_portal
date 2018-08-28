@@ -1,0 +1,122 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\rng\EventTypeInterface;
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_help().
+ */
+function rng_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'rng.registration_type.overview':
+      $output = '<p>' . t('Each registration type is a form that is filled to create a registration. Events can choose which registration type to use for its registrations.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_entity_access().
+ */
+function rng_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  /** @var \Drupal\rng\RngEntityAccess $rng_access */
+  $rng_access = \Drupal::service('rng.entity.access');
+  return $rng_access->hook_entity_access($entity, $operation, $account);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function rng_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'user_admin_permissions') {
+    // Anonymous 'user' cannot register himself because it is a fake user.
+    $form['permissions']['rng register self'][AccountInterface::ANONYMOUS_ROLE]['#disabled'] = TRUE;
+    $form['permissions']['rng register self'][AccountInterface::ANONYMOUS_ROLE]['#access'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function rng_cron() {
+  /** @var \Drupal\rng\RngCron $rng_cron */
+  $rng_cron = \Drupal::service('rng.cron');
+  $rng_cron->hook_cron();
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function rng_entity_operation(EntityInterface $entity) {
+  $operations = [];
+
+  if ($entity instanceof EventTypeInterface) {
+    $operations['access_defaults'] = array(
+      'title' => t('Event access defaults'),
+      'url' => Url::fromRoute('entity.event_type.access_defaults', [
+        'event_type' => $entity->id(),
+      ]),
+      'weight' => 20,
+    );
+  }
+
+  return $operations;
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function rng_entity_insert(EntityInterface $entity) {
+  /** @var \Drupal\rng\RngEntityModel $rng_model */
+  $rng_model = \Drupal::service('rng.entity.model');
+  $rng_model->hook_entity_postsave($entity, FALSE);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function rng_entity_update(EntityInterface $entity) {
+  /** @var \Drupal\rng\RngEntityModel $rng_model */
+  $rng_model = \Drupal::service('rng.entity.model');
+  $rng_model->hook_entity_postsave($entity, TRUE);
+}
+
+/**
+ * Implements hook_entity_predelete().
+ */
+function rng_entity_predelete(EntityInterface $entity) {
+  /** @var \Drupal\rng\RngEntityModel $rng_model */
+  $rng_model = \Drupal::service('rng.entity.model');
+  $rng_model->hook_entity_predelete($entity);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function rng_theme() {
+  return [
+    'registration' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for registration templates.
+ *
+ * Default template: registration.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the user information and any
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_registration(array &$variables) {
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}

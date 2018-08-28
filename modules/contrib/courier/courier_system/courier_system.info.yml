@@ -1,0 +1,13 @@
+name: Courier system
+type: module
+description: 'Replaces Drupal core module mails with Courier.'
+# core: 8.x
+configure: courier_system.config
+dependencies:
+  - courier
+
+# Information added by Drupal.org packaging script on 2016-07-23
+version: '8.x-1.0-alpha9'
+core: '8.x'
+project: 'courier'
+datestamp: 1469304240

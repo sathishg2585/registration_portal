@@ -1,0 +1,13 @@
+entity.entity_legal_document.add:
+  route_name: entity.entity_legal_document.add_form
+  title: 'Add'
+  weight: 1
+  appears_on:
+    - entity.entity_legal_document.collection
+
+entity.entity_legal_document_version.add:
+  route_name: entity.entity_legal_document_version.add_form
+  title: 'Add new version'
+  weight: 1
+  appears_on:
+    - entity.entity_legal_document.edit_form
